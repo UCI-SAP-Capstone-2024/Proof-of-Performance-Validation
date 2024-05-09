@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import os
 import bcrypt
+from streamlit_extras.switch_page_button import switch_page
+
 
 # File path for the database (this is a simple storage for demonstration)
 DB_FILE_PATH = "users_db.csv"
@@ -33,5 +35,6 @@ password = st.text_input("Password", type='password', key='login_password_input'
 if st.button("Login"):
     if check_login(username, password):
         st.success(f"Welcome {username}")
+        switch_page("promotions")
     else:
         st.error("Incorrect Username/Password")
