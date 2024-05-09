@@ -29,7 +29,7 @@ sys.path.insert(1, os.path.abspath("./coordinate_utils/"))
 import utils
 utils.print_HI()
 
-@st.cache(allow_output_mutation=True)
+@st.cache_data
 def process_image_and_get_predictions(image):
     # Process your image and get predictions here
     model = pickle.load(open('savedModel.sav', 'rb'))
@@ -56,6 +56,7 @@ if uploaded_file is not None:
     if st.button('Process Image'):
         processed_image = process_image_and_get_predictions(image_np)
         matched_store = utils.match_promotion_to_retailer(image)[0] 
-        st.markdown(matched_store["store"] + ": " + matched_store["address"])
+        # st.markdown(matched_store["store"] + ": " + matched_store["address"])
+        st.success("Promotion matched to store: " + matched_store["store"] + " at " + matched_store["address"] + " with product: " + matched_store["product_name"])
         st.image(processed_image, caption='Processed Image.', use_column_width=True)
 

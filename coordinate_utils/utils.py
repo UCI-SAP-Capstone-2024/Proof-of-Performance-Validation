@@ -98,6 +98,6 @@ def match_promotion_to_retailer(image):
 
         if validate_if_image_is_from_given_location(image, coord) == True:
             # If coordinates already in the dictionary, append the current row
-            coordinate_matches.append({"store": row["retailer_name"], "address": row["retailer_address"], "coordinates": coord})
+            coordinate_matches.append({"store": row["retailer_name"], "address": row["retailer_address"], "coordinates": coord, "product_name": row["product_name"]})
 
     return coordinate_matches

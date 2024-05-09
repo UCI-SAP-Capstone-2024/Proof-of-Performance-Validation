@@ -5,7 +5,7 @@ from streamlit_extras.switch_page_button import switch_page
 
 def main():
     # Title of the application
-    st.title('Display CSV File in Streamlit')
+    st.title('Current Promotions')
 
     # Filepath to your CSV file
     csv_file_path = 'promotions.csv'
@@ -14,7 +14,7 @@ def main():
     df = pd.read_csv(csv_file_path)
 
     # Display the DataFrame
-    st.write("### Displaying the CSV file:")
+    # st.write("### Displaying the CSV file:")
     st.dataframe(df)
 
     if st.button("Promotion Validation"):
