@@ -18,7 +18,7 @@ def main():
     st.dataframe(df)
 
     if st.button("Promotion Validation"):
-        switch_page("upload_proof_screen")
+        switch_page("promotion_seg")
 
 if __name__ == "__main__":
     main()
