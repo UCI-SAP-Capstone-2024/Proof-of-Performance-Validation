@@ -2,12 +2,17 @@ import streamlit as st
 import matplotlib.pyplot as plt
 from PIL import Image
 import pickle
+import pandas as pd
+import sys
+import os
 
 import cv2
 
 from matplotlib import pyplot as plt
 import numpy as np
 
+# import utils
+# utils.print_HI()
 
 from datetime import datetime
 
@@ -17,6 +22,12 @@ from detectron2.data import DatasetCatalog, MetadataCatalog
 # VISUALIZATION
 from detectron2.utils.visualizer import Visualizer
 from detectron2.utils.visualizer import ColorMode
+
+sys.path.insert(1, os.path.abspath("./coordinate_utils/"))
+
+
+import utils
+utils.print_HI()
 
 @st.cache(allow_output_mutation=True)
 def process_image_and_get_predictions(image):
@@ -44,5 +55,7 @@ if uploaded_file is not None:
     
     if st.button('Process Image'):
         processed_image = process_image_and_get_predictions(image_np)
+        matched_store = utils.match_promotion_to_retailer(image)[0] 
+        st.markdown(matched_store["store"] + ": " + matched_store["address"])
         st.image(processed_image, caption='Processed Image.', use_column_width=True)
 

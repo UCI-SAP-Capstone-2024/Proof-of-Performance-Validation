@@ -1,6 +1,6 @@
 promotion_id,promotion_name,retailer_name,product_name,retailer_address,retailer_coordinates
 1,dc_displ_01,Albertsons,Diet Coke,"4541 Campus Dr, Irvine, CA 92612","33.65268154930689, -117.8309282773398"
 2,dc_displ_02,Target,Diet Coke,"4255 Campus Dr STE A150, Irvine, CA 92612","33.6496907788259, -117.83887069163202"
-3,rb_displ_01,Albertsons,Red Bull,"6601 Quail Hill Pkwy, Irvine, CA 92603","33.658865139710734, -117.77939105955551"
+3,rb_displ_01,Albertsons,Red Bull,"6601 Quail Hill Pkwy, Irvine, CA 92603","33.66339435783444, -117.82640731798742"
 4,rb_displ_02,Target,Red Bull,"4255 Campus Dr STE A150, Irvine, CA 92612","33.6496907788259, -117.83887069163202"
 5,dc_displ_03,Albertsons,Diet Coke,"6601 Quail Hill Pkwy, Irvine, CA 92603","33.658865139710734, -117.77939105955551"
