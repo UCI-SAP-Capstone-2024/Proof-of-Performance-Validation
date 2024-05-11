@@ -8,11 +8,9 @@
         "promotionType": "DISPLAY",
         "promotionTypeText": [
             {
-                "0": {
-                    "campaignType": "STORE DISPLAY",
-                    "languageKey": "EN",
-                    "description": "VONS - Exclusive Trade Promotion Display Promo"
-                }
+                "campaignType": "STORE DISPLAY",
+                "languageKey": "EN",
+                "description": "VONS - Exclusive Trade Promotion Display Promo"
             }
         ],
         "tacticType": {
@@ -37,24 +35,26 @@
                 "manufacturerHierarchyNodeId": "0000001"
             }
         },
-        "promotionStatus": [{ "0": "inProcess" }, { "1": "released" }],
+        "promotionStatus": [
+            "inProcess",
+            "released"
+        ],
         "promotionDates": [
             {
-                "0": {
-                    "promotionDateTypeCode": "SELL_IN",
-                    "validFrom": "02-18-24",
-                    "validTo": "02-24-24"
-                }
+                "promotionDateTypeCode": "SELL_IN",
+                "validFrom": "02-18-24",
+                "validTo": "02-24-24"
             },
             {
-                "1": {
-                    "promotionDateTypeCode": "SELL_OUT",
-                    "validFrom": "02-18-24",
-                    "validTo": "02-24-24"
-                }
+                "promotionDateTypeCode": "SELL_OUT",
+                "validFrom": "02-18-24",
+                "validTo": "02-24-24"
             }
         ],
-        "promotionProducts": ["cans", "bottles"],
+        "promotionProducts": [
+            "cans",
+            "bottles"
+        ],
         "promotionProductsDescription": {
             "cans": {
                 "productId": "0000000001",
@@ -69,23 +69,20 @@
         },
         "tradeSpends": [
             {
-                "0": {
-                    "discountMethod": "",
-                    "spendCategory": "DISPLAY",
-                    "spendMethod": "DISPLAY",
-                    "spendType": "DSPL",
-                    "expenseType": "DSPL",
-                    "promotionReference": {
-                        "referenceDocumentType": "DISPLAY",
-                        "referenceDocumentId": "0000001"
-                    }
+                "discountMethod": "",
+                "spendCategory": "DISPLAY",
+                "spendMethod": "DISPLAY",
+                "spendType": "DSPL",
+                "expenseType": "DSPL",
+                "promotionReference": {
+                    "referenceDocumentType": "DISPLAY",
+                    "referenceDocumentId": "0000001"
                 }
             }
         ],
         "promotionDeletionIndicator": false,
         "promotionProductPlanningBase": "001"
     },
-
     {
         "id": 2,
         "tpmUUID": "dbb516ed-38fb-4a13-8ade-849b224a3829",
@@ -95,11 +92,9 @@
         "promotionType": "DISPLAY",
         "promotionTypeText": [
             {
-                "0": {
-                    "campaignType": "STORE DISPLAY",
-                    "languageKey": "EN",
-                    "description": "VONS - Exclusive Trade Promotion Display Promo"
-                }
+                "campaignType": "STORE DISPLAY",
+                "languageKey": "EN",
+                "description": "VONS - Exclusive Trade Promotion Display Promo"
             }
         ],
         "tacticType": {
@@ -124,24 +119,25 @@
                 "manufacturerHierarchyNodeId": "0000001"
             }
         },
-        "promotionStatus": [{ "0": "inProcess" }, { "1": "released" }],
+        "promotionStatus": [
+            "inProcess",
+            "released"
+        ],
         "promotionDates": [
             {
-                "0": {
-                    "promotionDateTypeCode": "SELL_IN",
-                    "validFrom": "02-18-24",
-                    "validTo": "05-24-24"
-                }
+                "promotionDateTypeCode": "SELL_IN",
+                "validFrom": "02-18-24",
+                "validTo": "05-24-24"
             },
             {
-                "1": {
-                    "promotionDateTypeCode": "SELL_OUT",
-                    "validFrom": "02-18-24",
-                    "validTo": "02-24-24"
-                }
+                "promotionDateTypeCode": "SELL_OUT",
+                "validFrom": "02-18-24",
+                "validTo": "02-24-24"
             }
         ],
-        "promotionProducts": ["cans"],
+        "promotionProducts": [
+            "cans"
+        ],
         "promotionProductsDescription": {
             "cans": {
                 "productId": "0000000001",
@@ -151,23 +147,20 @@
         },
         "tradeSpends": [
             {
-                "0": {
-                    "discountMethod": "",
-                    "spendCategory": "DISPLAY",
-                    "spendMethod": "DISPLAY",
-                    "spendType": "DSPL",
-                    "expenseType": "DSPL",
-                    "promotionReference": {
-                        "referenceDocumentType": "DISPLAY",
-                        "referenceDocumentId": "0000001"
-                    }
+                "discountMethod": "",
+                "spendCategory": "DISPLAY",
+                "spendMethod": "DISPLAY",
+                "spendType": "DSPL",
+                "expenseType": "DSPL",
+                "promotionReference": {
+                    "referenceDocumentType": "DISPLAY",
+                    "referenceDocumentId": "0000001"
                 }
             }
         ],
         "promotionDeletionIndicator": false,
         "promotionProductPlanningBase": "001"
     },
-
     {
         "id": 3,
         "tpmUUID": "dbb516ed-38fb-4a13-8ade-849b224a3830",
@@ -177,11 +170,9 @@
         "promotionType": "DISPLAY",
         "promotionTypeText": [
             {
-                "0": {
-                    "campaignType": "STORE DISPLAY",
-                    "languageKey": "EN",
-                    "description": "VONS - Exclusive Trade Promotion Display Promo"
-                }
+                "campaignType": "STORE DISPLAY",
+                "languageKey": "EN",
+                "description": "VONS - Exclusive Trade Promotion Display Promo"
             }
         ],
         "tacticType": {
@@ -206,24 +197,25 @@
                 "manufacturerHierarchyNodeId": "0000001"
             }
         },
-        "promotionStatus": [{ "0": "inProcess" }, { "1": "released" }],
+        "promotionStatus": [
+            "inProcess",
+            "released"
+        ],
         "promotionDates": [
             {
-                "0": {
-                    "promotionDateTypeCode": "SELL_IN",
-                    "validFrom": "02-18-24",
-                    "validTo": "05-24-24"
-                }
+                "promotionDateTypeCode": "SELL_IN",
+                "validFrom": "02-18-24",
+                "validTo": "05-24-24"
             },
             {
-                "1": {
-                    "promotionDateTypeCode": "SELL_OUT",
-                    "validFrom": "02-18-24",
-                    "validTo": "02-24-24"
-                }
+                "promotionDateTypeCode": "SELL_OUT",
+                "validFrom": "02-18-24",
+                "validTo": "02-24-24"
             }
         ],
-        "promotionProducts": ["bottles"],
+        "promotionProducts": [
+            "bottles"
+        ],
         "promotionProductsDescription": {
             "bottles": {
                 "productId": "0000000002",
@@ -233,23 +225,20 @@
         },
         "tradeSpends": [
             {
-                "0": {
-                    "discountMethod": "",
-                    "spendCategory": "DISPLAY",
-                    "spendMethod": "DISPLAY",
-                    "spendType": "DSPL",
-                    "expenseType": "DSPL",
-                    "promotionReference": {
-                        "referenceDocumentType": "DISPLAY",
-                        "referenceDocumentId": "0000001"
-                    }
+                "discountMethod": "",
+                "spendCategory": "DISPLAY",
+                "spendMethod": "DISPLAY",
+                "spendType": "DSPL",
+                "expenseType": "DSPL",
+                "promotionReference": {
+                    "referenceDocumentType": "DISPLAY",
+                    "referenceDocumentId": "0000001"
                 }
             }
         ],
         "promotionDeletionIndicator": false,
         "promotionProductPlanningBase": "001"
     },
-
     {
         "id": 4,
         "tpmUUID": "dbb516ed-38fb-4a13-8ade-849b224a3831",
@@ -259,11 +248,9 @@
         "promotionType": "DISPLAY",
         "promotionTypeText": [
             {
-                "0": {
-                    "campaignType": "STORE DISPLAY",
-                    "languageKey": "EN",
-                    "description": "VONS - Exclusive Trade Promotion Display Promo"
-                }
+                "campaignType": "STORE DISPLAY",
+                "languageKey": "EN",
+                "description": "VONS - Exclusive Trade Promotion Display Promo"
             }
         ],
         "tacticType": {
@@ -288,24 +275,26 @@
                 "manufacturerHierarchyNodeId": "0000001"
             }
         },
-        "promotionStatus": [{ "0": "inProcess" }, { "1": "released" }],
+        "promotionStatus": [
+            "inProcess",
+            "released"
+        ],
         "promotionDates": [
             {
-                "0": {
-                    "promotionDateTypeCode": "SELL_IN",
-                    "validFrom": "02-18-24",
-                    "validTo": "05-24-24"
-                }
+                "promotionDateTypeCode": "SELL_IN",
+                "validFrom": "02-18-24",
+                "validTo": "05-24-24"
             },
             {
-                "1": {
-                    "promotionDateTypeCode": "SELL_OUT",
-                    "validFrom": "02-18-24",
-                    "validTo": "02-24-24"
-                }
+                "promotionDateTypeCode": "SELL_OUT",
+                "validFrom": "02-18-24",
+                "validTo": "02-24-24"
             }
         ],
-        "promotionProducts": ["cans", "bottles"],
+        "promotionProducts": [
+            "cans",
+            "bottles"
+        ],
         "promotionProductsDescription": {
             "cans": {
                 "productId": "0000000001",
@@ -320,16 +309,14 @@
         },
         "tradeSpends": [
             {
-                "0": {
-                    "discountMethod": "",
-                    "spendCategory": "DISPLAY",
-                    "spendMethod": "DISPLAY",
-                    "spendType": "DSPL",
-                    "expenseType": "DSPL",
-                    "promotionReference": {
-                        "referenceDocumentType": "DISPLAY",
-                        "referenceDocumentId": "0000001"
-                    }
+                "discountMethod": "",
+                "spendCategory": "DISPLAY",
+                "spendMethod": "DISPLAY",
+                "spendType": "DSPL",
+                "expenseType": "DSPL",
+                "promotionReference": {
+                    "referenceDocumentType": "DISPLAY",
+                    "referenceDocumentId": "0000001"
                 }
             }
         ],
