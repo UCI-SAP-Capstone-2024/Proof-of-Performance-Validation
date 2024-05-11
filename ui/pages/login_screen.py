@@ -1,18 +1,9 @@
 import streamlit as st
-import pandas as pd
-import os
 import bcrypt
 from streamlit_extras.switch_page_button import switch_page
 
-
-# File path for the database (this is a simple storage for demonstration)
-DB_FILE_PATH = "users_db.csv"
-
 st.set_page_config(initial_sidebar_state="collapsed")
-
-if not os.path.isfile(DB_FILE_PATH):
-    df = pd.DataFrame(columns=['username', 'password'])
-    df.to_csv(DB_FILE_PATH, index=False)
+users_collection = st.session_state.db["users"]
 
 def hash_password(password):
     return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
@@ -21,20 +12,25 @@ def check_password(hashed_password, user_password):
     return bcrypt.checkpw(user_password.encode('utf-8'), hashed_password.encode('utf-8'))
 
 def check_login(username, password):
-    df = pd.read_csv(DB_FILE_PATH)
-    user = df[df['username'] == username]
-    if not user.empty:
-        stored_password = user.iloc[0]['password']
-        return check_password(stored_password, password)
+    # Retrieve the user from the database
+    user = users_collection.find_one({"username": username})
+    if user:
+        # Check if the password matches
+        if bcrypt.checkpw(password.encode('utf-8'), user["password"]):
+            return True
     return False
+
+if st.session_state.get("username"):
+    switch_page("promotions")
 
 st.subheader("Login Section")
 username = st.text_input("Username", key='login_username_input')
 password = st.text_input("Password", type='password', key='login_password_input')
-
+# st.write("Don't have an account? [Sign Up](/register_screen)")
 if st.button("Login"):
     if check_login(username, password):
         st.success(f"Welcome {username}")
+        st.session_state.username = username
         switch_page("promotions")
     else:
         st.error("Incorrect Username/Password")

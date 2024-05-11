@@ -1,17 +1,8 @@
 import streamlit as st
-import pandas as pd
-import os
 import bcrypt
 
-# File path for the database (this is a simple storage for demonstration)
-DB_FILE_PATH = "users_db.csv"
-
 st.set_page_config(initial_sidebar_state="collapsed")
-
-# Initialize the database if it does not exist
-if not os.path.isfile(DB_FILE_PATH):
-    df = pd.DataFrame(columns=['username', 'password'])
-    df.to_csv(DB_FILE_PATH, index=False)
+users_collection = st.session_state.db["users"]
 
 def hash_password(password):
     return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
@@ -20,14 +11,16 @@ def check_password(hashed_password, user_password):
     return bcrypt.checkpw(user_password.encode('utf-8'), hashed_password.encode('utf-8'))
 
 def register_user(username, password):
-    df = pd.read_csv(DB_FILE_PATH)
-    if username in df['username'].values:
+    # Check if the username already exists
+    if users_collection.find_one({"username": username}):
         st.error("Username already exists.")
         return False
     else:
-        hashed_password = hash_password(password)  # Hash the password
-        df = pd.concat([pd.DataFrame([[username, hashed_password.decode('utf-8')]], columns = df.columns), df], ignore_index=True)
-        df.to_csv(DB_FILE_PATH, index=False)
+        # Hash the password
+        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        
+        # Insert the new user into the database
+        users_collection.insert_one({"username": username, "password": hashed_password})
         return True
 
 st.subheader("Create New Account")
