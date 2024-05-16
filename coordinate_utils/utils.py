@@ -147,9 +147,9 @@ def get_image_details(image):
     image_date = extract_date_from_image(image)
 
     # Get Image Product
-    image_product = get_product_promoted_from_image(image)
+    # image_product = get_product_promoted_from_image(image)
 
-    return (image_location, image_date, image_product)
+    return (image_location, image_date)
 
 def filter_promotions_by_product(product_name, promotions):
     # for each promotion
@@ -169,7 +169,7 @@ def get_customer_details(matched_promotion):
     # matched
     pass
 
-def match_promotion_to_retailer(image):
+def match_promotion_to_retailer(image, image_product):
     # Read the CSV file into a pandas DataFrame
     # df = pd.read_csv("promotions.csv")
     # db = connect_to_db()
@@ -181,7 +181,7 @@ def match_promotion_to_retailer(image):
     promotions = list(collection.find())
 
     # Image Details
-    image_location, image_date, image_product = get_image_details(image)
+    image_location, image_date = get_image_details(image)
     
     # Filter the promotions by product
     promotions = filter_promotions_by_product(image_product, promotions)
