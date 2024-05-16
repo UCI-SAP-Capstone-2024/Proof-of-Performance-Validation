@@ -55,8 +55,8 @@ if uploaded_file is not None:
     
     if st.button('Process Image'):
         processed_image = process_image_and_get_predictions(image_np)
-        matched_store = utils.match_promotion_to_retailer(image)[0] 
+        matched_store = utils.match_promotion_to_retailer(image)
         # st.markdown(matched_store["store"] + ": " + matched_store["address"])
-        st.success("Promotion matched to store: " + matched_store["store"] + " at " + matched_store["address"] + " with product: " + matched_store["product_name"])
+        st.success("Promotion matched to store: " + matched_store["store_id"] + " at " + matched_store["address"] + " with product: " + matched_store["product"])
         st.image(processed_image, caption='Processed Image.', use_column_width=True)
 
