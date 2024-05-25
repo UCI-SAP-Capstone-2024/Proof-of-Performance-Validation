@@ -8,24 +8,24 @@ import datetime
 exif = {'ImageWidth': 4032,
  'ImageLength': 3024,
  'GPSInfo': {1: 'N',
-  2: (33.0, 38.0, 43.07676),
+  2: (33.0, 38.0, 16.8894),
   3: 'W',
-  4: (117.0, 49.0, 48.472319)},
+  4: (117.0, 42.0, 31.266)},
  'ResolutionUnit': 2,
  'ExifOffset': 238,
  'Make': 'samsung',
  'Model': 'SM-G780F',
  'Software': 'G780FXXSGFXD1',
  'Orientation': 6,
- 'DateTime': '2024:05:08 14:49:21',
+ 'DateTime': '2023:05:15 14:49:21',
  'YCbCrPositioning': 1,
  'XResolution': 72.0,
  'YResolution': 72.0,
  'ExifVersion': b'0220',
  'ShutterSpeedValue': 0.01,
  'ApertureValue': 1.69,
- 'DateTimeOriginal': '2024:05:08 14:49:21',
- 'DateTimeDigitized': '2024:05:08 14:49:21',
+ 'DateTimeOriginal': '2023:05:15 14:49:21',
+ 'DateTimeDigitized': '2023:05:15 14:49:21',
  'BrightnessValue': 2.46,
  'ExposureBiasValue': 0.0,
  'MaxApertureValue': 1.69,
@@ -71,15 +71,21 @@ def get_exif_tags_from_image(image):
     }
     return exif
 
+def get_product_id_from_product_name(product_name):
+    products = db["products"].find_one({"product_name": product_name})
+    return products["product_id"]
+
 def filter_promotions_by_product(image, promotions):
     # Get the product name from the image
     product_name = get_product_promoted_from_image(image)
+    # Get the product id from the product name
+    product_id = get_product_id_from_product_name(product_name)
     # for each promotion
     for promotion in promotions[:]:
     # get the product name
-        promotion_product_name = promotion["name"]
+        promotion_product_id = promotion["product"]
         # compare the product name with the product name in the image
-        if product_name.lower() not in promotion_product_name.lower():
+        if promotion_product_id != product_id:
             # remove the promotion from the list
             promotions.remove(promotion)
     # return the promotions that match the product name
@@ -92,13 +98,13 @@ def filter_promotions_by_dates(image, promotions):
     date = exif["DateTime"]
 
     date = datetime.datetime.strptime(date, '%Y:%m:%d %H:%M:%S')
-
+    print(date)
     # for each promotion
     for promotion in promotions[:]:
     # compare the date with the start and end date of the promotions in the promotions list
         start_date = promotion["start_date"]
         end_date = promotion["end_date"]
-        if not (datetime.datetime.strptime(start_date, '%m-%d-%Y') <= date <= datetime.datetime.strptime(end_date, '%m-%d-%Y')):
+        if not (datetime.datetime.strptime(start_date, '%d-%m-%Y') <= date <= datetime.datetime.strptime(end_date, '%d-%m-%Y')):
             # remove the promotion from the list
             promotions.remove(promotion)
     # return the promotions that are active on the date of the proof
