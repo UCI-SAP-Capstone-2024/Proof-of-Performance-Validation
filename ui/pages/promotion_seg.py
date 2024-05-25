@@ -30,6 +30,8 @@ sys.path.insert(1, os.path.abspath("./coordinate_utils/"))
 import utils
 utils.print_HI()
 
+# def proce
+
 @st.cache_data
 def process_image_and_get_predictions(image):
     # Process your image and get predictions here
@@ -56,20 +58,6 @@ def resize_image(image, width, height):
 
 st.title('Proof of Performance - Validation')
 
-# uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
-
-# if uploaded_file is not None:
-#     image = Image.open(uploaded_file)
-#     image_np = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)  # Convert PIL image to numpy array
-#     st.image(image, caption='Uploaded Image.', use_column_width=True)
-    
-#     if st.button('Process Image'):
-#         processed_image, detected_class = process_image_and_get_predictions(image_np)
-#         # matched_store = utils.match_promotion_to_retailer(image, detected_class)
-#         # st.markdown(matched_store["store"] + ": " + matched_store["address"])
-#         # st.success("Promotion matched to store: " + matched_store["store_id"] + " at " + matched_store["address"] + " with product: " + matched_store["product"])
-#         st.image(processed_image, caption='Processed Image.', use_column_width=True)
-
 uploaded_files = st.file_uploader("Choose multiple images...", accept_multiple_files=True, type=["jpg", "jpeg", "png"])
 
 if uploaded_files:
@@ -82,6 +70,7 @@ if uploaded_files:
         processed_images = []
         detected_classes = []
         resized_images = []
+        matched_stores = []
 
         # Process and store each uploaded image
         for uploaded_file in uploaded_files:
@@ -92,6 +81,10 @@ if uploaded_files:
             processed_images.append(processed_image)
             detected_classes.append(detected_class)
 
+            matched_store = utils.match_promotion_to_retailer(image, detected_class)
+            matched_stores.append(matched_store)
+            # st.markdown(matched_store["store"] + ": " + matched_store["address"])
+        
             # Resize the image for display in the grid
             resized_image = resize_image(Image.fromarray(processed_image), 340, 340)
             resized_images.append(resized_image)
@@ -106,5 +99,5 @@ if uploaded_files:
                     with cols[j]:
                         # Show the image with its caption
                         st.image(processed_images[idx], caption=detected_classes[idx], use_column_width=False)
-                        st.success(f"Promotion Matched to Promo #1003!")
+                        st.success("Promotion matched to store: " + matched_stores[idx]["store_id"][0] + " at " + matched_stores[idx]["address"] + " with product: " + matched_stores[idx]["product"])
                         
