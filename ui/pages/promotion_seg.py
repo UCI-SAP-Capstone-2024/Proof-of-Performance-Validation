@@ -30,7 +30,56 @@ sys.path.insert(1, os.path.abspath("./coordinate_utils/"))
 import utils
 utils.print_HI()
 
-# def proce
+def process_detected_class(index):
+    class_list = [
+        {
+            "id": 0,
+            "name": "redbull_cans-cocacola_cans",
+            "supercategory": "none"
+        },
+        {
+            "id": 1,
+            "name": "Coca Cola",
+            "supercategory": "redbull_cans-cocacola_cans"
+        },
+        {
+            "id": 2,
+            "name": "Coca Cola",
+            "supercategory": "redbull_cans-cocacola_cans"
+        },
+        {
+            "id": 3,
+            "name": "Coca Cola",
+            "supercategory": "redbull_cans-cocacola_cans"
+        },
+        {
+            "id": 4,
+            "name": "Fridge Display",
+            "supercategory": "redbull_cans-cocacola_cans"
+        },
+        {
+            "id": 5,
+            "name": "Other",
+            "supercategory": "redbull_cans-cocacola_cans"
+        },
+        {
+            "id": 6,
+            "name": "Others",
+            "supercategory": "redbull_cans-cocacola_cans"
+        },
+        {
+            "id": 7,
+            "name": "Red Bull",
+            "supercategory": "redbull_cans-cocacola_cans"
+        },
+        {
+            "id": 8,
+            "name": "Red Bull",
+            "supercategory": "redbull_cans-cocacola_cans"
+        }
+    ]
+
+    return class_list[index]["name"]
 
 @st.cache_data
 def process_image_and_get_predictions(image):
@@ -44,9 +93,7 @@ def process_image_and_get_predictions(image):
     )
     x = outputsRaw["instances"].pred_classes.cpu().numpy()
     most_frequent_class = np.bincount(x).argmax()
-    if most_frequent_class == 7:
-        most_frequent_class = "Red Bull"
-    # most_frequent_class = "Coca Cola"
+    most_frequent_class = process_detected_class(most_frequent_class)
     out = v.draw_instance_predictions(outputsRaw["instances"].to("cpu"))
     plt.imshow(cv2.cvtColor(out.get_image()[:, :, ::-1], cv2.COLOR_BGR2RGB))
     plt.show()
