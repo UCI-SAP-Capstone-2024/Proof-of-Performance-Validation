@@ -4,7 +4,6 @@ import pandas as pd
 from pymongo import MongoClient
 import datetime
 
-
 def connect_to_db():
     # Connect to your MongoDB Atlas cluster
     client = MongoClient("mongodb+srv://sapsuser:3dUEbY0ijMlL81vF@sap-pv.bdcccxg.mongodb.net/?retryWrites=true&w=majority&appName=SAP-PV")
@@ -50,6 +49,7 @@ def extract_lat_long_from_image(image):
     #     print(f)
     # Extract EXIF data from Image
     exif_tags = get_exif_tags_from_image(image)
+    # exif_tags = exif
     assert(exif_tags is not None)
     if(exif_tags is None):
         return
@@ -64,6 +64,7 @@ def extract_lat_long_from_image(image):
 
 def extract_date_from_image(image):
     exif_tags = get_exif_tags_from_image(image)
+    # exif_tags = exif
     
     date = exif_tags["DateTime"]
 
@@ -112,31 +113,25 @@ def filter_promotions_by_dates(promotion_date, promotions):
     # compare the date with the start and end date of the promotions in the promotions list
         start_date = promotion["start_date"]
         end_date = promotion["end_date"]
-        if not (datetime.datetime.strptime(start_date, '%m-%d-%Y') <= promotion_date <= datetime.datetime.strptime(end_date, '%m-%d-%Y')):
+        if not (datetime.datetime.strptime(start_date, '%d-%m-%Y') <= promotion_date <= datetime.datetime.strptime(end_date, '%d-%m-%Y')):
             # remove the promotion from the list
             promotions.remove(promotion)
     # return the promotions that are active on the date of the proof
     return promotions
 
 def filter_promotions_by_coordinates(image_location, promotions):
-    # Get location data from the image
-
     # fro each promotion
     for promotion in promotions[:]:
-        # get the store id
-        store_id = promotion["customer_hierarchy_id"]
-
-        print(store_id)
         # gget the coordinates of the store
-        store = db["albertsons"].find_one({"storeId": store_id})
-        store_coordinates = serialize_coordinates(store["coordinates"])
+        store = db["stores"].find_one({"store_id": promotion["store_id"][0]})
+        store_coordinates = serialize_coordinates(store["store_location"])
         # compare the coordinates of the store with the coordinates of the image
         if not validate_if_image_is_from_given_location(image_location, store_coordinates):
             # remove the promotion from the list
             promotions.remove(promotion)
 
     # return the promotions that are near the image
-    return promotions, store_id
+    return promotions
     # pass
 
 def get_image_details(image):
@@ -151,13 +146,21 @@ def get_image_details(image):
 
     return (image_location, image_date)
 
+
+def get_product_id_from_product_name(product_name):
+    products = db["products"].find_one({"product_name": product_name})
+    return products["product_id"]
+
+
 def filter_promotions_by_product(product_name, promotions):
+    # Get the product id from the product name
+    product_id = get_product_id_from_product_name(product_name)
     # for each promotion
     for promotion in promotions[:]:
     # get the product name
-        promotion_product_name = promotion["name"]
+        promotion_product_id = promotion["product"]
         # compare the product name with the product name in the image
-        if product_name.lower() not in promotion_product_name.lower():
+        if promotion_product_id != product_id:
             # remove the promotion from the list
             promotions.remove(promotion)
     # return the promotions that match the product name
@@ -183,41 +186,32 @@ def match_promotion_to_retailer(image, image_product):
     # Image Details
     image_location, image_date = get_image_details(image)
     
+    # print(len(promotions))
+
     # Filter the promotions by product
     promotions = filter_promotions_by_product(image_product, promotions)
+    # print(len(promotions))
 
     # Filter the promotions by date
     promotions = filter_promotions_by_dates(image_date, promotions)
+    # print(len(promotions))
 
     # Filter the promotions by coordinates
-    promotions, store_id = filter_promotions_by_coordinates(image_location, promotions)
+    promotions = filter_promotions_by_coordinates(image_location, promotions)
 
-    # # This dictionary will store coordinates as keys and all corresponding rows as values
-    # coordinate_matches = []
+    store_details = db["stores"].find_one({"store_id": promotions[0]["store_id"][0]})
 
-    # # Iterate through each row in the DataFrame
-    # for index, row in df.iterrows():
-    #     coord = row['retailer_coordinates']
-
-    #     coord = serialize_coordinates(coord)
-
-
-    #     if validate_if_image_is_from_given_location(image, coord) == True:
-    #         # If coordinates already in the dictionary, append the current row
-    #         coordinate_matches.append({"store": row["retailer_name"], "address": row["retailer_address"], "coordinates": coord, "product_name": row["product_name"]})
-
-    store_details = db["albertsons"].find_one({"storeId": store_id})
+    product_details = db["products"].find_one({"product_id": promotions[0]["product"]})
 
     matched_promotion = {
-        "promotion_id" : promotions[0]["id"],
+        "promotion_id" : promotions[0]["promotion_id"],
         "promotion_name" : promotions[0]["name"],
         "promotion_description" : promotions[0]["campaign_description"],
         "promotion_start_date" : promotions[0]["start_date"],
         "promotion_end_date" : promotions[0]["end_date"],
-        "customer_id" : promotions[0]["customer_id"],
-        "store_id" : store_id,
-        "address" : store_details["address"],
-        "product": image_product
+        "store_id" : promotions[0]["store_id"],
+        "address" : store_details["store_address"],
+        "product": product_details["product_name"]
     }
 
     # matched_promotion = get_customer_details(matched_promotion)
@@ -225,4 +219,3 @@ def match_promotion_to_retailer(image, image_product):
     print(matched_promotion)
 
     return matched_promotion
-    # return coordinate_matches
