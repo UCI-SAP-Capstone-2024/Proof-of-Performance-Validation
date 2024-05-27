@@ -3,10 +3,10 @@ from PIL import Image
 import io
 import os
 
-VONS_DIR = "C:\Code Files\Python Codes\Capstone\Proof-of-Performance-Validation\\assets\\vons"
+COSTCO_DIR = "C:\Code Files\Python Codes\Capstone\Proof-of-Performance-Validation\\assets\\costco"
 ALBERTSONS_DIR = "C:\Code Files\Python Codes\Capstone\Proof-of-Performance-Validation\\assets\\albertsons"
 TARGET_DIR = "C:\Code Files\Python Codes\Capstone\Proof-of-Performance-Validation\\assets\\target"
-KROGER_DIR = "C:\Code Files\Python Codes\Capstone\Proof-of-Performance-Validation\\assets\\kroger"
+RALPHS_DIR = "C:\Code Files\Python Codes\Capstone\Proof-of-Performance-Validation\\assets\\ralphs"
 
 def make_dirs():
     if not os.path.exists(os.getcwd() + "\\assets\\images"):
@@ -15,14 +15,14 @@ def make_dirs():
         os.makedirs(os.getcwd() + "\\assets\\invoices")
 
 def save_uploaded_file(retailer_choice, uploaded_file, file_name):
-    if retailer_choice == "VONS":
-        filepath = VONS_DIR
+    if retailer_choice == "costco":
+        filepath = COSTCO_DIR
     elif retailer_choice == "ALBERTSONS":
         filepath = ALBERTSONS_DIR
     elif retailer_choice == "TARGET":
         filepath = TARGET_DIR
-    elif retailer_choice == "KROGER":
-        filepath = KROGER_DIR
+    elif retailer_choice == "ralphs":
+        filepath = RALPHS_DIR
     if uploaded_file.type == "application/pdf":
         filepath = os.path.join(filepath + "\\invoices", uploaded_file.name)
     else:
@@ -65,7 +65,7 @@ def main():
         st.success("PDF Uploaded Successfully!")
 
     # Dropdown menu for retailer
-    retailer_choices = ["VONS", "KROGER", "ALBERTSONS", "TARGET"]
+    retailer_choices = ["COSTCO", "RALPHS", "ALBERTSONS", "TARGET"]
     retailer_choice = st.selectbox("Select a Retailer:", retailer_choices)
 
     # Submit button
@@ -75,7 +75,7 @@ def main():
             save_uploaded_file(retailer_choice, image, image.name  )
         save_uploaded_file(retailer_choice, uploaded_pdf, uploaded_pdf.name)
         
-        st.write("Images and PDF processed.")
+        st.success("Promotion Images and PDF uploaded!.")
 
 if __name__ == "__main__":
     main()
