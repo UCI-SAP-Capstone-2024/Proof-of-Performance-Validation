@@ -30,8 +30,7 @@ sys.path.insert(1, os.path.abspath("./coordinate_utils/"))
 import utils
 utils.print_HI()
 
-def process_detected_class(index):
-    class_list = [
+class_list = [
         {
             "id": 0,
             "name": "redbull_cans-cocacola_cans",
@@ -39,47 +38,49 @@ def process_detected_class(index):
         },
         {
             "id": 1,
-            "name": "Coca Cola",
-            "supercategory": "redbull_cans-cocacola_cans"
+            "name": "Coca Cola Bottles",
+            "supercategory": "Coca Cola"
         },
         {
             "id": 2,
-            "name": "Coca Cola",
-            "supercategory": "redbull_cans-cocacola_cans"
+            "name": "Coca Cola Cans",
+            "supercategory": "Coca Cola"
         },
         {
             "id": 3,
-            "name": "Coca Cola",
-            "supercategory": "redbull_cans-cocacola_cans"
+            "name": "Coca Cola Logo",
+            "supercategory": "Coca Cola"
         },
         {
             "id": 4,
             "name": "Fridge Display",
-            "supercategory": "redbull_cans-cocacola_cans"
+            "supercategory": "None"
         },
         {
             "id": 5,
-            "name": "Other",
-            "supercategory": "redbull_cans-cocacola_cans"
+            "name": "Other Bottles",
+            "supercategory": "None"
         },
         {
             "id": 6,
-            "name": "Others",
-            "supercategory": "redbull_cans-cocacola_cans"
+            "name": "Other Cans",
+            "supercategory": "None"
         },
         {
             "id": 7,
-            "name": "Red Bull",
-            "supercategory": "redbull_cans-cocacola_cans"
+            "name": "Red Bull Cans",
+            "supercategory": "Red Bull"
         },
         {
             "id": 8,
-            "name": "Red Bull",
-            "supercategory": "redbull_cans-cocacola_cans"
+            "name": "Red Bull Logo",
+            "supercategory": "Red Bull"
         }
     ]
 
-    return class_list[index]["name"]
+
+def process_detected_class(index):
+    return class_list[index]["supercategory"]
 
 @st.cache_data
 def process_image_and_get_predictions(image):
@@ -89,7 +90,7 @@ def process_image_and_get_predictions(image):
     v = Visualizer(image[:, :, ::-1],
                    metadata=MetadataCatalog.get("my_dataset_train"), 
                    scale=0.5, 
-                   instance_mode=ColorMode.IMAGE_BW   # remove the colors of unsegmented pixels. This option is only available for segmentation models
+                #    instance_mode=ColorMode.IMAGE_BW   # remove the colors of unsegmented pixels. This option is only available for segmentation models
     )
     x = outputsRaw["instances"].pred_classes.cpu().numpy()
     most_frequent_class = np.bincount(x).argmax()
@@ -101,9 +102,14 @@ def process_image_and_get_predictions(image):
 
 
 def resize_image(image, width, height):
+    # return np.asarray(image.thumbnail((width,height)))
     return image.resize((width, height))
 
 st.title('Proof of Performance - Validation')
+
+st.sidebar.title("Image Categories")
+for cls in class_list[1:]:
+    st.sidebar.markdown(f"**ID {cls['id']}**: {cls['name']}")
 
 uploaded_files = st.file_uploader("Choose multiple images...", accept_multiple_files=True, type=["jpg", "jpeg", "png"])
 
@@ -145,6 +151,6 @@ if uploaded_files:
                     # Display the image in the column
                     with cols[j]:
                         # Show the image with its caption
-                        st.image(processed_images[idx], caption=detected_classes[idx], use_column_width=False)
-                        st.success("Promotion matched to store: " + matched_stores[idx]["store_id"][0] + " at " + matched_stores[idx]["address"] + " with product: " + matched_stores[idx]["product"])
+                        st.image(resized_images[idx], caption=detected_classes[idx], use_column_width=False)
+                        st.success("Promotion matched to store: " + matched_stores[idx]["store_retailer"] + " at " + matched_stores[idx]["address"] + " with product: " + matched_stores[idx]["product"])
                         

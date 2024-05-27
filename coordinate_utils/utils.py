@@ -210,6 +210,7 @@ def match_promotion_to_retailer(image, image_product):
         "promotion_start_date" : promotions[0]["start_date"],
         "promotion_end_date" : promotions[0]["end_date"],
         "store_id" : promotions[0]["store_id"],
+        "store_retailer" : store_details["store_retailer"],
         "address" : store_details["store_address"],
         "product": product_details["product_name"]
     }
