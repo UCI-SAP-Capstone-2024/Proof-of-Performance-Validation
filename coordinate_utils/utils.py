@@ -121,13 +121,18 @@ def filter_promotions_by_dates(promotion_date, promotions):
 
 def filter_promotions_by_coordinates(image_location, promotions):
     # fro each promotion
+    found = False
     for promotion in promotions[:]:
-        # gget the coordinates of the store
-        store = db["stores"].find_one({"store_id": promotion["store_id"][0]})
-        store_coordinates = serialize_coordinates(store["store_location"])
-        # compare the coordinates of the store with the coordinates of the image
-        if not validate_if_image_is_from_given_location(image_location, store_coordinates):
-            # remove the promotion from the list
+        store_ids = promotion["store_id"]
+        for store_id in store_ids:
+            # gget the coordinates of the store
+            store = db["stores"].find_one({"store_id": store_id})
+            store_coordinates = serialize_coordinates(store["store_location"])
+            # compare the coordinates of the store with the coordinates of the image
+            found = validate_if_image_is_from_given_location(image_location, store_coordinates)
+            if found:
+                return promotions
+        if not found:
             promotions.remove(promotion)
 
     # return the promotions that are near the image
@@ -186,18 +191,19 @@ def match_promotion_to_retailer(image, image_product):
     # Image Details
     image_location, image_date = get_image_details(image)
     
-    # print(len(promotions))
+    print(len(promotions))
 
     # Filter the promotions by product
     promotions = filter_promotions_by_product(image_product, promotions)
-    # print(len(promotions))
+    print(len(promotions))
 
     # Filter the promotions by date
     promotions = filter_promotions_by_dates(image_date, promotions)
-    # print(len(promotions))
+    print(len(promotions))
 
     # Filter the promotions by coordinates
     promotions = filter_promotions_by_coordinates(image_location, promotions)
+    print(len(promotions))
 
     store_details = db["stores"].find_one({"store_id": promotions[0]["store_id"][0]})
 

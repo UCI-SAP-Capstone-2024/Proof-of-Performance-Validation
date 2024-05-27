@@ -152,5 +152,5 @@ if uploaded_files:
                     with cols[j]:
                         # Show the image with its caption
                         st.image(resized_images[idx], caption=detected_classes[idx], use_column_width=False)
-                        st.success("Promotion matched to store: " + matched_stores[idx]["store_retailer"] + " at " + matched_stores[idx]["address"] + " with product: " + matched_stores[idx]["product"])
+                        st.success("Promotion Matched!\n\nPromotion ID: "+ matched_stores[idx]["promotion_id"]+ "\n\nStore: " + matched_stores[idx]["store_retailer"] + " at " + matched_stores[idx]["address"] + "\n\nProduct: " + matched_stores[idx]["product"])
                         
