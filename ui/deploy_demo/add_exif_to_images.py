@@ -70,8 +70,10 @@ def has_exif_data(image_path):
 
 # Example usage
 if __name__ == "__main__":
-    input_image_path = "C:/Users/Om Naik/Downloads/mages_to2/cocacola02.jpg"
-    output_image_path = "C:/Users/Om Naik/Downloads/mages_to2/cocacola02.jpg"
+    # input_image_path = "C:/Users/Om Naik/Downloads/20240526_173352.jpg"
+    # 
+    input_image_path = "C:/Users/Om Naik/Downloads/images_to_use/rb05.jpg"
+    output_image_path = "C:/Users/Om Naik/Downloads/mages_to2/rb99.jpg"
     
     # Example EXIF data to add/modify
     exif_data = {
@@ -79,25 +81,25 @@ if __name__ == "__main__":
         'ImageLength': 3024,
         'GPSInfo': {
             1: 'N',
-            2: (33.0, 38.0, 16.8894),
+            2: (33.0, 42.0, 2.16),
             3: 'W',
-            4: (117.0, 42.0, 31.266)
+            4: (117.0, 45.0, 55.1982)
         },
         'ResolutionUnit': 2,
         'ExifOffset': 238,
         'Make': 'samsung',
         'Model': 'SM-G780F',
         'Software': 'G780FXXSGFXD1',
-        'Orientation': 6,
-        'DateTime': '2023:10:15 14:49:21',
+        'Orientation': 1,
+        'DateTime': '2023:05:15 14:49:21',
         'YCbCrPositioning': 1,
         'XResolution': 72.0,
         'YResolution': 72.0,
         'ExifVersion': b'0220',
         'ShutterSpeedValue': 0.01,
         'ApertureValue': 1.69,
-        'DateTimeOriginal': '2023:10:15 14:49:21',
-        'DateTimeDigitized': '2023:10:15 14:49:21',
+        'DateTimeOriginal': '2023:05:15 14:49:21',
+        'DateTimeDigitized': '2023:05:15 14:49:21',
         'BrightnessValue': 2.46,
         'ExposureBiasValue': 0.0,
         'MaxApertureValue': 1.69,
