@@ -24,6 +24,10 @@ if st.session_state.get("username"):
     switch_page("promotions")
 
 st.subheader("Login Section")
+
+# Add image after the subheading
+st.image("C:/Code Files/Python Codes/Capstone/Proof-of-Performance-Validation/ui/pages/promo.png")
+
 username = st.text_input("Username", key='login_username_input')
 password = st.text_input("Password", type='password', key='login_password_input')
 # st.write("Don't have an account? [Sign Up](/register_screen)")

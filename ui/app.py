@@ -12,7 +12,9 @@ def connect_to_db():
     return db
 
 def main():
-    st.title("SAP PromoteSync")
+    # st.title("SAP PromoteSync")
+    # Add image after the subheading
+    st.image("C:/Code Files/Python Codes/Capstone/Proof-of-Performance-Validation/ui/pages/promo.png")
     st.markdown("Welcome to SAP PromoteSync! This is a tool to validate the proof of performance of your promotions.")
     # st.markdown('<div><a href="/login_screen" target="_self">Login page</a></div>', unsafe_allow_html=True)
     # st.markdown('<div><a href="/register_screen" target="_self">Register page</a></div>', unsafe_allow_html=True)
