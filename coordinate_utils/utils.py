@@ -205,6 +205,9 @@ def match_promotion_to_retailer(image, image_product):
     promotions = filter_promotions_by_coordinates(image_location, promotions)
     print(len(promotions))
 
+    if len(promotions) == 0:
+        return None
+
     store_details = db["stores"].find_one({"store_id": promotions[0]["store_id"][0]})
 
     product_details = db["products"].find_one({"product_id": promotions[0]["product"]})

@@ -152,5 +152,7 @@ if uploaded_files:
                     with cols[j]:
                         # Show the image with its caption
                         st.image(resized_images[idx], caption=detected_classes[idx], use_column_width=False)
-                        st.success("Promotion Matched!\n\nPromotion ID: "+ matched_stores[idx]["promotion_id"]+ "\n\nStore: " + matched_stores[idx]["store_retailer"] + " at " + matched_stores[idx]["address"] + "\n\nProduct: " + matched_stores[idx]["product"])
-                        
+                        if len(matched_stores) > 0 and matched_stores[idx] is not None:
+                            st.success("Promotion Matched!\n\nPromotion ID: "+ matched_stores[idx]["promotion_id"]+ "\n\nStore: " + matched_stores[idx]["store_retailer"] + " at " + matched_stores[idx]["address"] + "\n\nProduct: " + matched_stores[idx]["product"])
+                        else:
+                            st.error("No promotion matched")
