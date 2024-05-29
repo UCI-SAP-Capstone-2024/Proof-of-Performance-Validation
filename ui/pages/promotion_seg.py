@@ -139,7 +139,8 @@ if uploaded_files:
             detected_classes.append(detected_class)
 
             matched_store = utils.match_promotion_to_retailer(image, detected_class)
-            matched_stores.append(matched_store)
+            if matched_store is not None:
+                matched_stores.append(matched_store)
             # st.markdown(matched_store["store"] + ": " + matched_store["address"])
         
             # Resize the image for display in the grid

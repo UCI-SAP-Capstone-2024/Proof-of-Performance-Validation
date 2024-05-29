@@ -18,12 +18,15 @@ def convert_gps_to_float_lat_lon(old):
     return (int(old["val"][0])+int(old["val"][1])/60.0+int(old["val"][2])/3600.0) * direction[old["dir"]]
 
 def get_exif_tags_from_image(image):
-    exif = {
-    ExifTags.TAGS[k]: v
-    for k, v in image._getexif().items()
-    if k in ExifTags.TAGS
-    }
-    return exif
+    if image.has_exif:
+        exif = {
+        ExifTags.TAGS[k]: v
+        for k, v in image._getexif().items()
+        if k in ExifTags.TAGS
+        }
+        return exif
+    else:
+        return None
 
 def get_lat_long_from_exif(exif_data):
     location_data = {}
@@ -42,11 +45,6 @@ def get_lat_long_from_exif(exif_data):
     return location_data
 
 def extract_lat_long_from_image(image):
-    # # Open Image From File Path
-    # try:
-    #     image = Image.open(image_path)
-    # except FileNotFoundError as f:
-    #     print(f)
     # Extract EXIF data from Image
     exif_tags = get_exif_tags_from_image(image)
     # exif_tags = exif
@@ -65,11 +63,11 @@ def extract_lat_long_from_image(image):
 def extract_date_from_image(image):
     exif_tags = get_exif_tags_from_image(image)
     # exif_tags = exif
+    if(exif_tags is None):
+        return None
     
     date = exif_tags["DateTime"]
-
     date = datetime.datetime.strptime(date, '%Y:%m:%d %H:%M:%S')
-
     return date
     
 
@@ -190,6 +188,8 @@ def match_promotion_to_retailer(image, image_product):
 
     # Image Details
     image_location, image_date = get_image_details(image)
+    if image_location is None or image_date is None:
+        return None
     
     print(len(promotions))
 
