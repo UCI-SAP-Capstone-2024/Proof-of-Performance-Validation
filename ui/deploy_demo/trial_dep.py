@@ -81,6 +81,35 @@ def process_detected_class(index):
 
     return class_list[index]["name"]
 
+def rotate_image(image):
+    try:
+        # image=Image.open(filepath)
+
+        for orientation in ExifTags.TAGS.keys():
+            if ExifTags.TAGS[orientation]=='Orientation':
+                break
+        
+        exif = image._getexif()
+        if exif is None:
+            print("No EXIF metadata found")
+            # image=image.transpose(Image.ROTATE_270)
+            return image
+        if exif[orientation] == 3:
+            image=image.transpose(Image.ROTATE_180)
+        elif exif[orientation] == 6:
+            image=image.transpose(Image.ROTATE_270)
+        elif exif[orientation] == 8:
+            image=image.transpose(Image.ROTATE_90)
+        print("Works fine!")
+        # image.save(filepath)
+        # image.close()
+        return image
+    except (AttributeError, KeyError, IndexError):
+        # cases: image don't have getexif
+        print("Error in rotation")
+        image=image.transpose(Image.ROTATE_270)
+        return image
+
 def resize_with_padding(img, expected_size=(1024, 1024)):
     img.thumbnail((expected_size[0], expected_size[1]))
     delta_width = expected_size[0] - img.size[0]
@@ -110,7 +139,7 @@ def process_image_and_get_predictions(image):
         most_frequent_class = process_detected_class(most_frequent_class)
     out = v.draw_instance_predictions(outputsRaw["instances"].to("cpu"))
     plt.imshow(cv2.cvtColor(out.get_image()[:, :, ::-1], cv2.COLOR_BGR2RGB))
-    plt.show()
+    # plt.show()
     return out.get_image(), most_frequent_class
 
 def resize_image(image, width, height):
@@ -134,8 +163,8 @@ if uploaded_files:
         # Process and store each uploaded image
         for uploaded_file in uploaded_files:
             image = Image.open(uploaded_file)
-            image = image.rotate(270, expand=True)
-            
+            # image = image.rotate(270, expand=True)
+            image = rotate_image(image)
             image = resize_with_padding(image)
             image_np = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)  # Convert PIL image to numpy array
 
