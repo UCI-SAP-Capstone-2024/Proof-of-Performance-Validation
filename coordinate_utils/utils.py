@@ -1,4 +1,5 @@
 from PIL import Image, ExifTags
+from exif import Image as ExifImage
 import math
 import pandas as pd
 from pymongo import MongoClient
@@ -18,15 +19,15 @@ def convert_gps_to_float_lat_lon(old):
     return (int(old["val"][0])+int(old["val"][1])/60.0+int(old["val"][2])/3600.0) * direction[old["dir"]]
 
 def get_exif_tags_from_image(image):
-    if image.has_exif:
-        exif = {
-        ExifTags.TAGS[k]: v
-        for k, v in image._getexif().items()
-        if k in ExifTags.TAGS
-        }
-        return exif
-    else:
+    exif_tags = image._getexif()
+    if exif_tags is None:
         return None
+    exif = {
+    ExifTags.TAGS[k]: v
+    for k, v in exif_tags.items()
+    if k in ExifTags.TAGS
+    }
+    return exif
 
 def get_lat_long_from_exif(exif_data):
     location_data = {}
@@ -38,22 +39,24 @@ def get_lat_long_from_exif(exif_data):
         location_data["lat"]["val"] = exif_data["GPSInfo"][2]
         location_data["lon"]["dir"] = exif_data["GPSInfo"][3]
         location_data["lon"]["val"] = exif_data["GPSInfo"][4]
+        return location_data
     except KeyError as k:
         print(k)
         print("Location Data Missing")
-    
-    return location_data
+        return None
 
 def extract_lat_long_from_image(image):
     # Extract EXIF data from Image
     exif_tags = get_exif_tags_from_image(image)
     # exif_tags = exif
-    assert(exif_tags is not None)
+    # assert(exif_tags is not None)
     if(exif_tags is None):
         return
     # Get Lat and Long Data
     location_data_gps = get_lat_long_from_exif(exif_data=exif_tags)
-    assert(location_data_gps is not None)
+    # assert(location_data_gps is not None)
+    if(location_data_gps is None):
+        return 
     try:
         final_coordinates = (convert_gps_to_float_lat_lon(location_data_gps["lat"]), convert_gps_to_float_lat_lon(location_data_gps["lon"]))
     except KeyError as k:
@@ -65,10 +68,14 @@ def extract_date_from_image(image):
     # exif_tags = exif
     if(exif_tags is None):
         return None
-    
-    date = exif_tags["DateTime"]
-    date = datetime.datetime.strptime(date, '%Y:%m:%d %H:%M:%S')
-    return date
+    try:
+        date = exif_tags["DateTime"]
+        date = datetime.datetime.strptime(date, '%Y:%m:%d %H:%M:%S')
+        return date
+    except KeyError as k:
+        print(k)
+        print("Date Data Missing")
+        return None
     
 
 def spherical_law_of_cosines(loc_1, loc_2):

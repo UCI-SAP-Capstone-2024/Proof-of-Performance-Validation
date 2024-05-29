@@ -93,7 +93,7 @@ def process_image_and_get_predictions(image):
                 #    instance_mode=ColorMode.IMAGE_BW   # remove the colors of unsegmented pixels. This option is only available for segmentation models
     )
     x = outputsRaw["instances"].pred_classes.cpu().numpy()
-    print("Detected Classes: " + x)
+    print("Detected Classes: ", x)
     if (len(x) == 0):
         most_frequent_class = "No Class Detected"
     else:
@@ -101,7 +101,7 @@ def process_image_and_get_predictions(image):
         most_frequent_class = process_detected_class(most_frequent_class)
     out = v.draw_instance_predictions(outputsRaw["instances"].to("cpu"))
     plt.imshow(cv2.cvtColor(out.get_image()[:, :, ::-1], cv2.COLOR_BGR2RGB))
-    plt.show()
+    # plt.show()
     return out.get_image(), most_frequent_class
 
 
