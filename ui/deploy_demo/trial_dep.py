@@ -173,7 +173,7 @@ if uploaded_files:
             detected_classes.append(detected_class)
 
             # Resize the image for display in the grid
-            resized_image = resize_image(Image.fromarray(processed_image), 330, 330)
+            resized_image = resize_image(Image.fromarray(processed_image), 300, 300)
             resized_images.append(resized_image)
         
         # Display the processed images in a grid
@@ -185,4 +185,4 @@ if uploaded_files:
                     # Display the image in the column
                     with cols[j]:
                         # Show the image with its caption
-                        st.image(processed_images[idx], caption=detected_classes[idx], use_column_width=False) 
+                        st.image(resized_images[idx], caption=detected_classes[idx], use_column_width=False) 
