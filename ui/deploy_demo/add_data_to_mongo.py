@@ -23,7 +23,7 @@ def insert_documents_to_mongodb(collection_name, documents):
     return result.inserted_ids
 
 def add_stores():
-    stores_list = [
+    stores_list2 = [
         {
             "store_id": "s001",
             "store_retailer": "Albertsons",
@@ -95,6 +95,15 @@ def add_stores():
             "store_location": "33.57644895243048, -117.70434372855664"
         }
     ]
+    stores_list = [
+        {
+            "store_id": "s011",
+            "store_retailer": "UCI",
+            "store_name": "ISEB",
+            "store_address": "419 Physical Sciences Quad, Irvine, CA 92697",
+            "store_location": "33.64313763754278, -117.8439102401954"
+        }
+    ]
     insert_documents_to_mongodb("stores", stores_list)
 
 def add_products():
@@ -110,10 +119,10 @@ def add_products():
             "product_category": "Beverages",
         }
     ]    
-    insert_documents_to_mongodb("products", products_list)  
+    # insert_documents_to_mongodb("products", products_list)  
 
 def add_promotions():
-    promotions_list = [
+    promotions_list2 = [
     {
         "promotion_id":"1001",
         "name":"RED BULL BRAND RB MINI-FRIDGE",
@@ -402,8 +411,62 @@ def add_promotions():
         "product":"p001"
     }
     ]
+    promotions_list = [
+        {
+        "promotion_id":"1013",
+        "name":"RED BULL BRAND RB STACK",
+        "type":"STACK",
+        "campaign_type":"SHOWCASE DISPLAY",
+        "campaign_description":"ISEB - UCI Capstone Showcase Display Promo",
+        "status":[
+            "inProcess",
+            "released"
+        ],
+        "period_type":"SELL_IN",
+        "start_date":"27-05-2024",
+        "end_date":"31-05-2023",
+        "tactic_type":"stack of red bull cans",
+        "tactic_location":"on table",
+        "tactic_location_type":2,
+        "store_id":[
+            "s011"
+        ],
+        "customer_hierarchy_id":"1001",
+        "customer_hierarchy_type":"H1",
+        "product_types":[
+            "cans"
+        ],
+        "product":"p002"
+        },
+        {
+        "promotion_id":"1013",
+        "name":"COCA COLA BRAND CC STACK",
+        "type":"STACK",
+        "campaign_type":"SHOWCASE DISPLAY",
+        "campaign_description":"ISEB - UCI Capstone Showcase Display Promo",
+        "status":[
+            "inProcess",
+            "released"
+        ],
+        "period_type":"SELL_IN",
+        "start_date":"27-05-2024",
+        "end_date":"31-05-2023",
+        "tactic_type":"stack of coca cola bottles",
+        "tactic_location":"on table",
+        "tactic_location_type":2,
+        "store_id":[
+            "s011"
+        ],
+        "customer_hierarchy_id":"1001",
+        "customer_hierarchy_type":"H1",
+        "product_types":[
+            "cans"
+        ],
+        "product":"p001"
+        }
+    ]
     insert_documents_to_mongodb("promotions", promotions_list)
 
-add_promotions()
-add_products()
+# add_promotions()
+# add_products()
 add_stores()

@@ -131,6 +131,7 @@ def process_image_and_get_predictions(image):
                 #    instance_mode=ColorMode.IMAGE_BW   # remove the colors of unsegmented pixels. This option is only available for segmentation models
     )
     x = outputsRaw["instances"].pred_classes.cpu().numpy()
+    
     print(x)
     if (len(x) == 0):
         most_frequent_class = "No Class Detected"
@@ -159,23 +160,28 @@ if uploaded_files:
         processed_images = []
         detected_classes = []
         resized_images = []
+        # matched_stores = []
 
         # Process and store each uploaded image
         for uploaded_file in uploaded_files:
-            image = Image.open(uploaded_file)
+            image_og = Image.open(uploaded_file)
             # image = image.rotate(270, expand=True)
-            image = rotate_image(image)
-            image = resize_with_padding(image)
+            image_rt = rotate_image(image_og)
+            image = resize_with_padding(image_rt)
             image_np = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)  # Convert PIL image to numpy array
 
             processed_image, detected_class = process_image_and_get_predictions(image_np)
             processed_images.append(processed_image)
             detected_classes.append(detected_class)
 
+            # matched_store = utils.match_promotion_to_retailer(image_og, detected_class)
+            # if matched_store is not None:
+            #     matched_stores.append(matched_store)
+
             # Resize the image for display in the grid
             resized_image = resize_image(Image.fromarray(processed_image), 300, 300)
             resized_images.append(resized_image)
-        
+        print(detected_classes)
         # Display the processed images in a grid
         for i in range(num_rows):
             cols = st.columns(num_columns)  # Create columns for each image in the row
@@ -186,3 +192,9 @@ if uploaded_files:
                     with cols[j]:
                         # Show the image with its caption
                         st.image(resized_images[idx], caption=detected_classes[idx], use_column_width=False) 
+                        # st.success(f"Promotion Matched!\n\nPromotion ID: 1013 \n\nStore: UCI at 419 Physical Sciences Quad, Irvine, CA 92697\n\nProduct: {set(detected_classes)}")
+
+                        # if len(matched_stores) > 0 and matched_stores[idx] is not None:
+                        #     st.success("Promotion Matched!\n\nPromotion ID: "+ matched_stores[idx]["promotion_id"]+ "\n\nStore: " + matched_stores[idx]["store_retailer"] + " at " + matched_stores[idx]["address"] + "\n\nProduct: " + matched_stores[idx]["product"])
+                        # else:
+                        #     st.error("No promotion matched")
